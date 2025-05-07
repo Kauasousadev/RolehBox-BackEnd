@@ -1,7 +1,5 @@
 package edu.kaua.helpencontro.dto;
 
-import edu.kaua.helpencontro.models.enums.Price;
-
 public class DateDTO {
     private String name;
     private String description;

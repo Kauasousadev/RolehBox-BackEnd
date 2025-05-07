@@ -1,7 +1,7 @@
 package edu.kaua.helpencontro.controlers;
 
 import edu.kaua.helpencontro.dto.DateDTO;
-import edu.kaua.helpencontro.models.Date;
+import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.services.DateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class DateController {
 
     @PostMapping("/addDate")
     public ResponseEntity<String> addDate(@RequestBody DateDTO date) {
-        Date newDate = dateService.addDate(date);
-        if (newDate != null) {
+        Roleh newRoleh = dateService.addDate(date);
+        if (newRoleh != null) {
             return ResponseEntity.ok("Date added successfully");
         }else {
             return ResponseEntity.badRequest().build();
@@ -27,10 +27,10 @@ public class DateController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Date>> getAllDate() {
-        List<Date> dates = dateService.getAllDates();
-        if (dates != null) {
-            return ResponseEntity.ok(dates);
+    public ResponseEntity<List<Roleh>> getAllDate() {
+        List<Roleh> rolehs = dateService.getAllDates();
+        if (rolehs != null) {
+            return ResponseEntity.ok(rolehs);
         }else{
             return ResponseEntity.badRequest().build();
         }

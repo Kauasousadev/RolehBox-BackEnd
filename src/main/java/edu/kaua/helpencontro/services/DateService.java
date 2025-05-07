@@ -1,7 +1,7 @@
 package edu.kaua.helpencontro.services;
 
 import edu.kaua.helpencontro.dto.DateDTO;
-import edu.kaua.helpencontro.models.Date;
+import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.repositories.DateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,33 +14,33 @@ public class DateService {
     @Autowired
     private DateRepository dateRepository;
 
-    public Date addDate(DateDTO dateDTO) {
-        Date date = new Date();
+    public Roleh addDate(DateDTO dateDTO) {
+        Roleh roleh = new Roleh();
 
-        date.setName(dateDTO.getName());
-        date.setDescription(dateDTO.getDescription());
-        date.setPrice(dateDTO.getPrice());
-        date.setAlcoholic(dateDTO.getAlcoholic() != null && dateDTO.getAlcoholic());
-        date.setFood(dateDTO.getFood() != null && dateDTO.getFood());
-        date.setPlaceToSit(dateDTO.getPlaceToSit() != null && dateDTO.getPlaceToSit());
-        date.setAmbientMusic(dateDTO.getAmbientMusic() != null && dateDTO.getAmbientMusic());
-        date.setExercise(dateDTO.getExercise() != null && dateDTO.getExercise());
+        roleh.setName(dateDTO.getName());
+        roleh.setDescription(dateDTO.getDescription());
+        roleh.setPrice(dateDTO.getPrice());
+        roleh.setAlcoholic(dateDTO.getAlcoholic() != null && dateDTO.getAlcoholic());
+        roleh.setFood(dateDTO.getFood() != null && dateDTO.getFood());
+        roleh.setPlaceToSit(dateDTO.getPlaceToSit() != null && dateDTO.getPlaceToSit());
+        roleh.setAmbientMusic(dateDTO.getAmbientMusic() != null && dateDTO.getAmbientMusic());
+        roleh.setExercise(dateDTO.getExercise() != null && dateDTO.getExercise());
 
-        dateRepository.save(date);
-        if (dateRepository.existsById(date.getId())) {
-            return date;
+        dateRepository.save(roleh);
+        if (dateRepository.existsById(roleh.getId())) {
+            return roleh;
         }else {
             return null;
         }
     }
 
-    public List<Date> getAllDates() {
-        List<Date> dates = dateRepository.findAll();
+    public List<Roleh> getAllDates() {
+        List<Roleh> rolehs = dateRepository.findAll();
 
-        if (dates.isEmpty()) {
+        if (rolehs.isEmpty()) {
             return null;
         }else {
-            return dates;
+            return rolehs;
         }
     }
 
