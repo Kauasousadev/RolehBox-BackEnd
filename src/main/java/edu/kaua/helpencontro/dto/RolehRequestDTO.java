@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RolehRequestDTO {
     private String name;
-    private String description;
+    private String desc;
     private String address;
     private String phoneNumber;
     private CaracteristicaRequestDTO caracteristicas;
@@ -19,12 +19,12 @@ public class RolehRequestDTO {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getAddress() {
