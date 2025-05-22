@@ -2,10 +2,9 @@ package edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica;
 
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -19,15 +18,20 @@ public class TipoMusica {
 
     private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "musica_caracteristica",
-            joinColumns = @JoinColumn(name = "musica_id"),
-            inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
-    )
-    private Set<CaracteristicaRole> caracteristicaRole;
+    @ManyToMany(mappedBy = "musicas")
+    private Set<CaracteristicaRole> caracteristicaRole = new HashSet<>();
 
-    public TipoMusica(String description) {
-        this.description = description;
+    public TipoMusica(String getdescription) {
+        this.description = getdescription;
+    }
+
+    public void adicionarCaracteristica(CaracteristicaRole caracteristicaRole) {
+        this.caracteristicaRole.add(caracteristicaRole);
+        caracteristicaRole.getMusicas().add(this);
+    }
+
+    public void removerCaracteristica(CaracteristicaRole caracteristicaRole) {
+        this.caracteristicaRole.remove(caracteristicaRole);
+        caracteristicaRole.getMusicas().remove(this);
     }
 }

@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 @Service
 public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.CaracteristicaRequestDTO, Roleh, CaracteristicaRole> {
     private final ComidaMapper comidaMapper;
-    //private final MusicaMapper musicaMapper;
+    private final MusicaMapper musicaMapper;
     //private final AcessibilidadeMapper acessibilidadeMapper;
     //private final OutrasTagsMapper outrasTagsMapper;
     private final TipoLocalRepository tipoLocalRepository;
 
-    public CaracteristicasMapper(ComidaMapper comidaMapper, TipoLocalRepository tipoLocalRepository) {
+    public CaracteristicasMapper(ComidaMapper comidaMapper, MusicaMapper musicaMapper, TipoLocalRepository tipoLocalRepository) {
         this.comidaMapper = comidaMapper;
+        this.musicaMapper = musicaMapper;
         this.tipoLocalRepository = tipoLocalRepository;
     }
 
@@ -48,7 +49,7 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
 
         // Mapeando listas com relacionamentos many-to-many
         mapComidas(caracteristica, caracteristicaRequestDTO.getComidas());
-        //mapMusicas(caracteristica, caracteristicaRequestDTO.getMusicas());
+        mapMusicas(caracteristica, caracteristicaRequestDTO.getMusicas());
         //mapAcessibilidades(caracteristica, caracteristicaRequestDTO.getAcessibilidades());
         //mapOutrasTags(caracteristica, caracteristicaRequestDTO.getOutrasTags());
 
@@ -74,5 +75,19 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
                 comida.adicionarCaracteristica(caracteristica)
         );
         return comidasMapeadas;
+    }
+
+    private Set<TipoMusica> mapMusicas(CaracteristicaRole caracteristica, Set<RolehRequestDTO.MusicaRequestDTO> musicas) {
+        if (musicas == null || musicas.isEmpty()) return null;
+
+        Set<TipoMusica> musicasMapeadas = musicas.stream()
+                .map(musicaMapper)
+                .collect(Collectors.toSet());
+
+        // Atualiza ambos os lados do relacionamento
+        musicasMapeadas.forEach(musica ->
+                musica.adicionarCaracteristica(caracteristica)
+        );
+        return musicasMapeadas;
     }
 }

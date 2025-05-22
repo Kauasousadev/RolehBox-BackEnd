@@ -2,6 +2,7 @@ package edu.kaua.helpencontro.services.mapperdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
+import edu.kaua.helpencontro.repositories.TipoComidaRepository;
 import edu.kaua.helpencontro.repositories.TipoMusicaRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,9 @@ public class MusicaMapper implements Function<RolehRequestDTO.MusicaRequestDTO, 
     }
 
     @Override
-    public TipoMusica apply(RolehRequestDTO.MusicaRequestDTO MusicaRequestDTO) {
-        TipoMusica newMusica = new TipoMusica(MusicaRequestDTO.getdescription());
+    public TipoMusica apply(RolehRequestDTO.MusicaRequestDTO musicaRequestDTO) {
+        TipoMusica newMusica = new TipoMusica(musicaRequestDTO.getDescription());
         tipoMusicaRepository.save(newMusica);
-        return new TipoMusica(
-                MusicaRequestDTO.getdescription()
-        );
+        return newMusica;
     }
 }
