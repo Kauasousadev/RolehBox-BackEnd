@@ -2,40 +2,32 @@ package edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica;
 
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class TipoMusica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String descricao;
+    private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "caracteristica_id")
-    private CaracteristicaRole caracteristica;
+    @ManyToMany
+    @JoinTable(
+            name = "musica_caracteristica",
+            joinColumns = @JoinColumn(name = "musica_id"),
+            inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
+    )
+    private Set<CaracteristicaRole> caracteristicaRole;
 
-    public TipoMusica() {
-    }
-
-    public TipoMusica(String descricao, CaracteristicaRole caracteristica) {
-        this.descricao = descricao;
-        this.caracteristica = caracteristica;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public CaracteristicaRole getCaracteristica() {
-        return caracteristica;
-    }
-
-    public void setCaracteristica(CaracteristicaRole caracteristica) {
-        this.caracteristica = caracteristica;
+    public TipoMusica(String description) {
+        this.description = description;
     }
 }

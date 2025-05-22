@@ -1,25 +1,25 @@
 package edu.kaua.helpencontro.services.mapperdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoComida;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import edu.kaua.helpencontro.repositories.TipoComidaRepository;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.function.Function;
 
-@Mapper
-public interface ComidaMapper {
-    ComidaMapper INSTANCE = Mappers.getMapper(ComidaMapper.class);
+@Service
+public class ComidaMapper implements Function<RolehRequestDTO.ComidaRequestDTO, TipoComida> {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "caracteristica", ignore = true)
-    TipoComida toEntity(RolehRequestDTO.ComidaRequestDTO dto);
+    private final TipoComidaRepository tipoComidaRepository;
 
-    RolehResponseDTO.ComidaResponseDTO toResponseDTO(TipoComida entity);
+    public ComidaMapper(TipoComidaRepository tipoComidaRepository) {
+        this.tipoComidaRepository = tipoComidaRepository;
+    }
 
-    // Mapeamento de lista
-    List<TipoComida> toEntityList(List<RolehRequestDTO.ComidaRequestDTO> dtos);
-    List<RolehResponseDTO.ComidaResponseDTO> toResponseDTOList(List<TipoComida> entities);
+    @Override
+    public TipoComida apply(RolehRequestDTO.ComidaRequestDTO ComidaRequestDTO) {
+        TipoComida newComida = new TipoComida(ComidaRequestDTO.getdescription());
+        tipoComidaRepository.save(newComida);
+        return newComida;
+    }
 }

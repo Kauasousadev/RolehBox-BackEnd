@@ -1,24 +1,18 @@
 package edu.kaua.helpencontro.services.mapperdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.OutrasTags;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.function.Function;
 
-@Mapper
-public interface OutrasTagsMapper {
-    OutrasTagsMapper INSTANCE = Mappers.getMapper(OutrasTagsMapper.class);
+@Service
+public class OutrasTagsMapper implements Function<RolehRequestDTO.OutrasTagsRequestDTO, OutrasTags> {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "caracteristica", ignore = true)
-    OutrasTags toEntity(RolehRequestDTO.MusicaRequestDTO dto);
-
-    RolehResponseDTO.MusicaResponseDTO toResponseDTO(OutrasTags entity);
-
-    List<OutrasTags> toEntityList(List<RolehRequestDTO.MusicaRequestDTO> dtos);
-    List<RolehResponseDTO.MusicaResponseDTO> toResponseDTOList(List<OutrasTags> entities);
+    @Override
+    public OutrasTags apply(RolehRequestDTO.OutrasTagsRequestDTO OutrasTagsRequestDTO) {
+        return new OutrasTags(
+                OutrasTagsRequestDTO.getdescription()
+        );
+    }
 }

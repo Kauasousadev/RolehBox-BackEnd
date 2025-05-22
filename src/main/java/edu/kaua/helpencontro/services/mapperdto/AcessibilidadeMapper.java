@@ -1,24 +1,18 @@
 package edu.kaua.helpencontro.services.mapperdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoAcessibilidade;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.function.Function;
 
-@Mapper
-public interface AcessibilidadeMapper {
-    AcessibilidadeMapper INSTANCE = Mappers.getMapper(AcessibilidadeMapper.class);
+@Service
+public class AcessibilidadeMapper implements Function<RolehRequestDTO.AcessibilidadeRequestDTO, TipoAcessibilidade> {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "caracteristica", ignore = true)
-    TipoAcessibilidade toEntity(RolehRequestDTO.MusicaRequestDTO dto);
-
-    RolehResponseDTO.MusicaResponseDTO toResponseDTO(TipoAcessibilidade entity);
-
-    List<TipoAcessibilidade> toEntityList(List<RolehRequestDTO.MusicaRequestDTO> dtos);
-    List<RolehResponseDTO.MusicaResponseDTO> toResponseDTOList(List<TipoAcessibilidade> entities);
+    @Override
+    public TipoAcessibilidade apply(RolehRequestDTO.AcessibilidadeRequestDTO AcessibilidadeRequestDTO) {
+        return new TipoAcessibilidade(
+                AcessibilidadeRequestDTO.getdescription()
+        );
+    }
 }

@@ -1,20 +1,18 @@
 package edu.kaua.helpencontro.services.mapperdto;
 
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
+import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoLocal;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Service;
 
-@Mapper
-public interface LocalMapper {
-    LocalMapper INSTANCE = Mappers.getMapper(LocalMapper.class);
+import java.util.function.Function;
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "descricao", source = "descricao")
-    RolehResponseDTO.LocalResponseDTO toResponseDTO(TipoLocal local);
+@Service
+public class LocalMapper implements Function<Long, TipoLocal> {
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "descricao", source = "descricao")
-    TipoLocal toEntity(RolehResponseDTO.LocalResponseDTO dto);
+    @Override
+    public TipoLocal apply(Long localId) {
+        return new TipoLocal(
+                localId
+        );
+    }
 }

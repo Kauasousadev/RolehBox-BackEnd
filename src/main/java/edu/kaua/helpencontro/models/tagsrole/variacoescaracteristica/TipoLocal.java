@@ -1,35 +1,22 @@
 package edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class TipoLocal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column
-    private String desc;
+    private String description;
 
-    public TipoLocal() {
-    }
-
-    public TipoLocal(String desc) {
-        this.desc = desc;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public TipoLocal(Long localId) {
+        this.id = localId;
     }
 }

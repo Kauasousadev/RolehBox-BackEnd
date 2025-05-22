@@ -1,24 +1,27 @@
 package edu.kaua.helpencontro.services.mapperdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import edu.kaua.helpencontro.repositories.TipoMusicaRepository;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.function.Function;
 
-@Mapper
-public interface MusicaMapper {
-    MusicaMapper INSTANCE = Mappers.getMapper(MusicaMapper.class);
+@Service
+public class MusicaMapper implements Function<RolehRequestDTO.MusicaRequestDTO, TipoMusica> {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "caracteristica", ignore = true)
-    TipoMusica toEntity(RolehRequestDTO.MusicaRequestDTO dto);
+    private final TipoMusicaRepository tipoMusicaRepository;
 
-    RolehResponseDTO.MusicaResponseDTO toResponseDTO(TipoMusica entity);
+    public MusicaMapper(TipoMusicaRepository tipoMusicaRepository) {
+        this.tipoMusicaRepository = tipoMusicaRepository;
+    }
 
-    List<TipoMusica> toEntityList(List<RolehRequestDTO.MusicaRequestDTO> dtos);
-    List<RolehResponseDTO.MusicaResponseDTO> toResponseDTOList(List<TipoMusica> entities);
+    @Override
+    public TipoMusica apply(RolehRequestDTO.MusicaRequestDTO MusicaRequestDTO) {
+        TipoMusica newMusica = new TipoMusica(MusicaRequestDTO.getdescription());
+        tipoMusicaRepository.save(newMusica);
+        return new TipoMusica(
+                MusicaRequestDTO.getdescription()
+        );
+    }
 }
