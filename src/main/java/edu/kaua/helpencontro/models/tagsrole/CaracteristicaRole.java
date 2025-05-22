@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,11 +16,10 @@ import java.util.Set;
 public class CaracteristicaRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private int id;
 
     @Column(name = "g_maps_link")
-    private String gMapsLink;
+    private String googleMapsLink;
     @Column()
     private String instaUser;
     @Column()
@@ -48,8 +45,8 @@ public class CaracteristicaRole {
             joinColumns = @JoinColumn(name = "caracteristica_id"),
             inverseJoinColumns = @JoinColumn(name = "comida_id")
     )
-    @ToString.Exclude
     private Set<TipoComida> comidas = new HashSet<>();
+
 
     @ManyToMany
     @JoinTable(
@@ -57,25 +54,5 @@ public class CaracteristicaRole {
             joinColumns = @JoinColumn(name = "caracteristica_id"),
             inverseJoinColumns = @JoinColumn(name = "musica_id")
     )
-    @ToString.Exclude
     private Set<TipoMusica> musicas = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "acessibilidade_caracteristica",
-            joinColumns = @JoinColumn(name = "caracteristica_id"),
-            inverseJoinColumns = @JoinColumn(name = "acessibilidade_id")
-    )
-    @ToString.Exclude
-    private Set<TipoAcessibilidade> acessibilidade = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "outrasTags_caracteristica",
-            joinColumns = @JoinColumn(name = "caracteristica_id"),
-            inverseJoinColumns = @JoinColumn(name = "outrasTags_id")
-    )
-    @ToString.Exclude
-    private Set<OutrasTags> outrasTags = new HashSet<>();
-
 }

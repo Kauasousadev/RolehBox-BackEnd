@@ -18,7 +18,7 @@ public class ComidaMapper implements Function<RolehRequestDTO.ComidaRequestDTO, 
 
     @Override
     public TipoComida apply(RolehRequestDTO.ComidaRequestDTO ComidaRequestDTO) {
-        TipoComida newComida = new TipoComida(ComidaRequestDTO.getdescription());
+        TipoComida newComida = new TipoComida(ComidaRequestDTO.getDescription());
         tipoComidaRepository.save(newComida);
         return newComida;
     }

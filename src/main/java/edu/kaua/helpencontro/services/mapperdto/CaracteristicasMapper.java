@@ -1,40 +1,31 @@
 package edu.kaua.helpencontro.services.mapperdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
+import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.*;
 import edu.kaua.helpencontro.repositories.TipoLocalRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 @Service
-public class CaracteristicasMapper implements Function<RolehRequestDTO.CaracteristicaRequestDTO, CaracteristicaRole> {
+public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.CaracteristicaRequestDTO, Roleh, CaracteristicaRole> {
     private final ComidaMapper comidaMapper;
-    private final MusicaMapper musicaMapper;
-    private final AcessibilidadeMapper acessibilidadeMapper;
-    private final OutrasTagsMapper outrasTagsMapper;
+    //private final MusicaMapper musicaMapper;
+    //private final AcessibilidadeMapper acessibilidadeMapper;
+    //private final OutrasTagsMapper outrasTagsMapper;
     private final TipoLocalRepository tipoLocalRepository;
 
-    @Autowired
-    public CaracteristicasMapper(ComidaMapper comidaMapper,
-                                 MusicaMapper musicaMapper,
-                                 AcessibilidadeMapper acessibilidadeMapper,
-                                 OutrasTagsMapper outrasTagsMapper, TipoLocalRepository tipoLocalRepository) {
+    public CaracteristicasMapper(ComidaMapper comidaMapper, TipoLocalRepository tipoLocalRepository) {
         this.comidaMapper = comidaMapper;
-        this.musicaMapper = musicaMapper;
-        this.acessibilidadeMapper = acessibilidadeMapper;
-        this.outrasTagsMapper = outrasTagsMapper;
         this.tipoLocalRepository = tipoLocalRepository;
     }
 
     @Override
-    public CaracteristicaRole apply(RolehRequestDTO.CaracteristicaRequestDTO caracteristicaRequestDTO) {
+    public CaracteristicaRole apply(RolehRequestDTO.CaracteristicaRequestDTO caracteristicaRequestDTO, Roleh roleh) {
         if (caracteristicaRequestDTO == null) {
             return null;
         }
@@ -42,12 +33,15 @@ public class CaracteristicasMapper implements Function<RolehRequestDTO.Caracteri
         CaracteristicaRole caracteristica = new CaracteristicaRole();
 
         // Mapeando campos básicos
-        caracteristica.setGMapsLink(caracteristicaRequestDTO.getGMapsLink());
+        caracteristica.setGoogleMapsLink(caracteristicaRequestDTO.getGoogleMapsLink());
         caracteristica.setInstaUser(caracteristicaRequestDTO.getInstaUser());
         caracteristica.setMinPrice(caracteristicaRequestDTO.getMinPrice());
         caracteristica.setMaxPrice(caracteristicaRequestDTO.getMaxPrice());
         caracteristica.setOpeningHours(caracteristicaRequestDTO.getOpeningHours());
         caracteristica.setClosingHours(caracteristicaRequestDTO.getClosingHours());
+
+        // Mapeando roleh
+        caracteristica.setRoleh(roleh);
 
         // Mapeando tipo local
         caracteristica.setTipoLocal(getTipoLocal(caracteristicaRequestDTO.getLocalId()));
@@ -62,68 +56,23 @@ public class CaracteristicasMapper implements Function<RolehRequestDTO.Caracteri
     }
 
     private TipoLocal getTipoLocal(Long id){
-        return tipoLocalRepository.getById(id);
+        if (tipoLocalRepository.existsById(id)) {
+            return tipoLocalRepository.findById(id).get();
+        }
+        return null;
     }
 
-    private void mapComidas(CaracteristicaRole caracteristica, List<RolehRequestDTO.ComidaRequestDTO> comidas) {
-        if (comidas == null || comidas.isEmpty()) return;
+    private Set<TipoComida> mapComidas(CaracteristicaRole caracteristica, Set<RolehRequestDTO.ComidaRequestDTO> comidas) {
+        if (comidas == null || comidas.isEmpty()) return null;
 
         Set<TipoComida> comidasMapeadas = comidas.stream()
                 .map(comidaMapper)
                 .collect(Collectors.toSet());
 
         // Atualiza ambos os lados do relacionamento
-        caracteristica.setComidas(comidasMapeadas);
         comidasMapeadas.forEach(comida ->
-                comida.getCaracteristicaRole().add(caracteristica)
+                comida.adicionarCaracteristica(caracteristica)
         );
-    }
-
-    private void mapMusicas(CaracteristicaRole caracteristica, List<RolehRequestDTO.MusicaRequestDTO> musicas) {
-        if (musicas == null || musicas.isEmpty()) return;
-
-        Set<TipoMusica> musicasMapeadas = musicas.stream()
-                .map(musicaMapper)
-                .peek(musica -> {
-                    if (musica.getCaracteristicaRole() == null) {
-                        musica.setCaracteristicaRole(new HashSet<>());
-                    }
-                    musica.getCaracteristicaRole().add(caracteristica);
-                })
-                .collect(Collectors.toSet());
-
-        caracteristica.setMusicas(musicasMapeadas);
-    }
-
-    private void mapAcessibilidades(CaracteristicaRole caracteristica, List<RolehRequestDTO.AcessibilidadeRequestDTO> acessibilidades) {
-        if (acessibilidades == null || acessibilidades.isEmpty()) return;
-
-        Set<TipoAcessibilidade> acessibilidadesMapeadas = acessibilidades.stream()
-                .map(acessibilidadeMapper)
-                .peek(acessibilidade -> {
-                    if (acessibilidade.getCaracteristicaRole() == null) {
-                        acessibilidade.setCaracteristicaRole(new HashSet<>());
-                    }
-                    acessibilidade.getCaracteristicaRole().add(caracteristica);
-                })
-                .collect(Collectors.toSet());
-
-        caracteristica.setAcessibilidade(acessibilidadesMapeadas);
-    }
-
-    private void mapOutrasTags(CaracteristicaRole caracteristica, List<RolehRequestDTO.OutrasTagsRequestDTO> outrasTags) {
-        if (outrasTags == null || outrasTags.isEmpty()) return;
-
-        Set<OutrasTags> outrasTagsMapeadas = outrasTags.stream()
-                .map(outrasTagsMapper)
-                .peek(outraTag -> {
-                    if (outraTag.getCaracteristicaRole() == null) {
-                        outraTag.setCaracteristicaRole(new HashSet<>());
-                    }
-                    outraTag.getCaracteristicaRole().add(caracteristica);
-                })
-                .collect(Collectors.toSet());
-
-        caracteristica.setOutrasTags(outrasTagsMapeadas);
+        return comidasMapeadas;
     }
 }

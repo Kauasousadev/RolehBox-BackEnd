@@ -16,12 +16,14 @@ public class RolehMapper implements Function<RolehRequestDTO, Roleh> {
 
     @Override
     public Roleh apply(RolehRequestDTO rolehRequestDTO) {
-        return new Roleh(
-                rolehRequestDTO.getName(),
-                rolehRequestDTO.getDescription(),
-                rolehRequestDTO.getAddress(),
-                rolehRequestDTO.getPhoneNumber(),
-                caracteristicasMapper.apply(rolehRequestDTO.getCaracteristicas())
-        );
+        Roleh roleh = new Roleh();
+
+        roleh.setName(rolehRequestDTO.getName());
+        roleh.setDescription(rolehRequestDTO.getDescription());
+        roleh.setAddress(rolehRequestDTO.getAddress());
+        roleh.setPhoneNumber(rolehRequestDTO.getPhoneNumber());
+        roleh.setCaracteristicas(caracteristicasMapper.apply(rolehRequestDTO.getCaracteristicas(), roleh));
+
+        return roleh;
     }
 }
