@@ -1,8 +1,7 @@
-package edu.kaua.helpencontro.services.mapperdto;
+package edu.kaua.helpencontro.services.mapperrequestdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
-import edu.kaua.helpencontro.repositories.TipoComidaRepository;
 import edu.kaua.helpencontro.repositories.TipoMusicaRepository;
 import org.springframework.stereotype.Service;
 

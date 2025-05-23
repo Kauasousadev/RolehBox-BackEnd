@@ -1,6 +1,7 @@
 package edu.kaua.helpencontro.controller;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
+import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.services.RolehService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class RolehController {
     @PostMapping("/add")
     public ResponseEntity<?> addRoleh(@RequestBody @Valid RolehRequestDTO rolehRequestDTO) {
         try {
-            Roleh savedRoleh = rolehService.addRoleh(rolehRequestDTO);
+            RolehResponseDTO savedRoleh = rolehService.addRoleh(rolehRequestDTO);
             return ResponseEntity.ok(savedRoleh);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

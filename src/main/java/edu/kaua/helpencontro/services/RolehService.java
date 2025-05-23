@@ -1,17 +1,14 @@
 package edu.kaua.helpencontro.services;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
+import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.Roleh;
-import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
 import edu.kaua.helpencontro.repositories.RolehRepository;
-import edu.kaua.helpencontro.services.mapperdto.RolehMapper;
+import edu.kaua.helpencontro.services.mapperrequestdto.RolehMapper;
+import edu.kaua.helpencontro.services.mapperresponsedto.RolehResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import javax.management.relation.Role;
-import java.util.Optional;
 
 @Service
 public class RolehService {
@@ -21,10 +18,13 @@ public class RolehService {
     @Qualifier("rolehMapper")
     @Autowired
     private RolehMapper rolehMapper;
+    @Autowired
+    private RolehResponseMapper rolehResponseMapper;
 
-    public Roleh addRoleh(RolehRequestDTO roleh) {
+    public RolehResponseDTO addRoleh(RolehRequestDTO roleh) {
         Roleh newRoleh = rolehMapper.apply(roleh);
         rolehRepository.save(newRoleh);
-        return newRoleh;
+        RolehResponseDTO rolehResponseDTO = rolehResponseMapper.apply(newRoleh);
+        return rolehResponseDTO;
     }
 }
