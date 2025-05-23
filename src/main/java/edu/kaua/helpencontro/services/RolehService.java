@@ -27,4 +27,13 @@ public class RolehService {
         RolehResponseDTO rolehResponseDTO = rolehResponseMapper.apply(newRoleh);
         return rolehResponseDTO;
     }
+
+    public boolean deleteRoleh(Long id) {
+        if (rolehRepository.existsById(id)) {
+            rolehRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

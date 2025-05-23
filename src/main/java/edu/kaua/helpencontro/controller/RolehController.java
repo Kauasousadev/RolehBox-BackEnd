@@ -6,10 +6,7 @@ import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.services.RolehService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/roleh")
@@ -28,4 +25,12 @@ public class RolehController {
         }
     }
 
+    @DeleteMapping("/del/{id}")
+    public ResponseEntity<?> delRoleh(@PathVariable Long id) {
+        if (rolehService.deleteRoleh(id)){
+            return ResponseEntity.ok().body("Roleh deletado com sucesso");
+        }else{
+            return ResponseEntity.badRequest().body("Erro ao deletar roleh");
+        }
+    }
 }
