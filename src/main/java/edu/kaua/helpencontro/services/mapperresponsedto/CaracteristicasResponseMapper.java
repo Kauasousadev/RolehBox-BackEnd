@@ -2,8 +2,8 @@ package edu.kaua.helpencontro.services.mapperresponsedto;
 
 import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
+import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoAcessibilidade;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoComida;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoLocal;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
 import edu.kaua.helpencontro.repositories.TipoLocalRepository;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,11 @@ public class CaracteristicasResponseMapper implements Function<CaracteristicaRol
     private final ComidaResponseMapper comidaResponseMapper = new ComidaResponseMapper();
     private final MusicaResponseMapper musicaResponseMapper = new MusicaResponseMapper();
     private final TipoLocalRepository tipoLocalRepository;
+    private final AcessibilidadeResponseMapper acessibilidadeResponseMapper;
 
-    public CaracteristicasResponseMapper(TipoLocalRepository tipoLocalRepository) {
+    public CaracteristicasResponseMapper(TipoLocalRepository tipoLocalRepository, AcessibilidadeResponseMapper acessibilidadeResponseMapper) {
         this.tipoLocalRepository = tipoLocalRepository;
+        this.acessibilidadeResponseMapper = acessibilidadeResponseMapper;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class CaracteristicasResponseMapper implements Function<CaracteristicaRol
         caracteristicasResponseDTO.setTipoLocal(getTipoLocal(caracteristicaRole.getTipoLocal().getId()));
         caracteristicasResponseDTO.setComidas(mapComidas(caracteristicaRole.getComidas()));
         caracteristicasResponseDTO.setMusicas(mapMusicas(caracteristicaRole.getMusicas()));
+        caracteristicasResponseDTO.setAcessibilidades(mapAcessibilidade(caracteristicaRole.getAcessibilidades()));
 
         return caracteristicasResponseDTO;
     }
@@ -57,6 +60,17 @@ public class CaracteristicasResponseMapper implements Function<CaracteristicaRol
                 .collect(Collectors.toSet());
 
         return musicasMapeadas;
+
+    }
+
+    private Set<RolehResponseDTO.AcessibilidadeResponseDTO> mapAcessibilidade(Set<TipoAcessibilidade> acessibilidades) {
+        if (acessibilidades == null || acessibilidades.isEmpty()) return null;
+
+        Set<RolehResponseDTO.AcessibilidadeResponseDTO> acessibilidadesMapeadas = acessibilidades.stream()
+                .map(acessibilidadeResponseMapper)
+                .collect(Collectors.toSet());
+
+        return acessibilidadesMapeadas;
 
     }
 

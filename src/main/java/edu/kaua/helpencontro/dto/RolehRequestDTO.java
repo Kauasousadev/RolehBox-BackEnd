@@ -31,6 +31,8 @@ public class RolehRequestDTO {
         private Set<ComidaRequestDTO> comidas;
         @Getter
         private Set<MusicaRequestDTO> musicas;
+        @Getter
+        private Set<AcessibilidadeRequestDTO> acessibilidades;
     }
 
     @Data
@@ -42,6 +44,12 @@ public class RolehRequestDTO {
     @Data
     @RequiredArgsConstructor
     public static class MusicaRequestDTO {
+        private String description;
+    }
+
+    @Data
+    @RequiredArgsConstructor
+    public static class AcessibilidadeRequestDTO {
         private String description;
     }
 }

@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
 public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.CaracteristicaRequestDTO, Roleh, CaracteristicaRole> {
     private final ComidaMapper comidaMapper;
     private final MusicaMapper musicaMapper;
-    //private final AcessibilidadeMapper acessibilidadeMapper;
+    private final AcessibilidadeMapper acessibilidadeMapper;
     //private final OutrasTagsMapper outrasTagsMapper;
     private final TipoLocalRepository tipoLocalRepository;
 
-    public CaracteristicasMapper(ComidaMapper comidaMapper, MusicaMapper musicaMapper, TipoLocalRepository tipoLocalRepository) {
+    public CaracteristicasMapper(ComidaMapper comidaMapper, MusicaMapper musicaMapper, AcessibilidadeMapper acessibilidadeMapper, TipoLocalRepository tipoLocalRepository) {
         this.comidaMapper = comidaMapper;
         this.musicaMapper = musicaMapper;
+        this.acessibilidadeMapper = acessibilidadeMapper;
         this.tipoLocalRepository = tipoLocalRepository;
     }
 
@@ -50,6 +51,7 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
         // Mapeando listas com relacionamentos many-to-many
         mapComidas(caracteristica, caracteristicaRequestDTO.getComidas());
         mapMusicas(caracteristica, caracteristicaRequestDTO.getMusicas());
+        mapAcessibilidades(caracteristica, caracteristicaRequestDTO.getAcessibilidades());
         //mapAcessibilidades(caracteristica, caracteristicaRequestDTO.getAcessibilidades());
         //mapOutrasTags(caracteristica, caracteristicaRequestDTO.getOutrasTags());
 
@@ -89,5 +91,19 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
                 musica.adicionarCaracteristica(caracteristica)
         );
         return musicasMapeadas;
+    }
+
+    private Set<TipoAcessibilidade> mapAcessibilidades(CaracteristicaRole caracteristica, Set<RolehRequestDTO.AcessibilidadeRequestDTO> acessibilidades) {
+        if (acessibilidades == null || acessibilidades.isEmpty()) return null;
+
+        Set<TipoAcessibilidade> acessibilidadesMapeadas = acessibilidades.stream()
+                .map(acessibilidadeMapper)
+                .collect(Collectors.toSet());
+
+        // Atualiza ambos os lados do relacionamento
+        acessibilidadesMapeadas.forEach(acessibilidade ->
+                acessibilidade.adicionarCaracteristica(caracteristica)
+        );
+        return acessibilidadesMapeadas;
     }
 }

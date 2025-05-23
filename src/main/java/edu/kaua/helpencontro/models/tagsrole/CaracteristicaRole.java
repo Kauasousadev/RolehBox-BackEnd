@@ -55,4 +55,12 @@ public class CaracteristicaRole {
             inverseJoinColumns = @JoinColumn(name = "musica_id")
     )
     private Set<TipoMusica> musicas = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "acessibilidade_caracteristica",
+            joinColumns = @JoinColumn(name = "caracteristica_id"),
+            inverseJoinColumns = @JoinColumn(name = "acessibilidade_id")
+    )
+    private Set<TipoAcessibilidade> acessibilidades = new HashSet<>();
 }
