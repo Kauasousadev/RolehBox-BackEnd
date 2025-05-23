@@ -15,6 +15,11 @@ public class RolehController {
     @Autowired
     private RolehService rolehService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<RolehResponseDTO> getRoleh(@PathVariable Long id) {
+        return ResponseEntity.ok(rolehService.getRoleh(id));
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> addRoleh(@RequestBody @Valid RolehRequestDTO rolehRequestDTO) {
         try {

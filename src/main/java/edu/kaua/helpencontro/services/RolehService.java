@@ -21,6 +21,15 @@ public class RolehService {
     @Autowired
     private RolehResponseMapper rolehResponseMapper;
 
+    public RolehResponseDTO getRoleh(Long id) {
+        if (rolehRepository.existsById(id)) {
+            RolehResponseDTO rolehResponseDTO = new RolehResponseDTO();
+            rolehResponseDTO = rolehResponseMapper.apply(rolehRepository.findById(id).get());
+            return rolehResponseDTO;
+        }
+        return null;
+    }
+
     public RolehResponseDTO addRoleh(RolehRequestDTO roleh) {
         Roleh newRoleh = rolehMapper.apply(roleh);
         rolehRepository.save(newRoleh);
