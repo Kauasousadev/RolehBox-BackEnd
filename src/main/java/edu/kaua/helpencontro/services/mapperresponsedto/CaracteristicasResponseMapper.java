@@ -2,6 +2,7 @@ package edu.kaua.helpencontro.services.mapperresponsedto;
 
 import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
+import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.OutrasTags;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoAcessibilidade;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoComida;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
@@ -18,10 +19,12 @@ public class CaracteristicasResponseMapper implements Function<CaracteristicaRol
     private final MusicaResponseMapper musicaResponseMapper = new MusicaResponseMapper();
     private final TipoLocalRepository tipoLocalRepository;
     private final AcessibilidadeResponseMapper acessibilidadeResponseMapper;
+    private final OutrasTagsResponseMapper outrasTagsResponseMapper;
 
-    public CaracteristicasResponseMapper(TipoLocalRepository tipoLocalRepository, AcessibilidadeResponseMapper acessibilidadeResponseMapper) {
+    public CaracteristicasResponseMapper(TipoLocalRepository tipoLocalRepository, AcessibilidadeResponseMapper acessibilidadeResponseMapper, OutrasTagsResponseMapper outrasTagsResponseMapper) {
         this.tipoLocalRepository = tipoLocalRepository;
         this.acessibilidadeResponseMapper = acessibilidadeResponseMapper;
+        this.outrasTagsResponseMapper = outrasTagsResponseMapper;
     }
 
     @Override
@@ -38,6 +41,7 @@ public class CaracteristicasResponseMapper implements Function<CaracteristicaRol
         caracteristicasResponseDTO.setComidas(mapComidas(caracteristicaRole.getComidas()));
         caracteristicasResponseDTO.setMusicas(mapMusicas(caracteristicaRole.getMusicas()));
         caracteristicasResponseDTO.setAcessibilidades(mapAcessibilidade(caracteristicaRole.getAcessibilidades()));
+        caracteristicasResponseDTO.setOutrasTags(mapOutrasTags(caracteristicaRole.getOutrasTags()));
 
         return caracteristicasResponseDTO;
     }
@@ -71,6 +75,17 @@ public class CaracteristicasResponseMapper implements Function<CaracteristicaRol
                 .collect(Collectors.toSet());
 
         return acessibilidadesMapeadas;
+
+    }
+
+    private Set<RolehResponseDTO.OutrasTagsResponseDTO> mapOutrasTags(Set<OutrasTags> outrasTags) {
+        if (outrasTags == null || outrasTags.isEmpty()) return null;
+
+        Set<RolehResponseDTO.OutrasTagsResponseDTO> outrasTagsMapeadas = outrasTags.stream()
+                .map(outrasTagsResponseMapper)
+                .collect(Collectors.toSet());
+
+        return outrasTagsMapeadas;
 
     }
 

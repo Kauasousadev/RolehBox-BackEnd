@@ -63,4 +63,12 @@ public class CaracteristicaRole {
             inverseJoinColumns = @JoinColumn(name = "acessibilidade_id")
     )
     private Set<TipoAcessibilidade> acessibilidades = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "outrastags_caracteristica",
+            joinColumns = @JoinColumn(name = "caracteristica_id"),
+            inverseJoinColumns = @JoinColumn(name = "outrastags_id")
+    )
+    private Set<OutrasTags> outrasTags = new HashSet<>();
 }

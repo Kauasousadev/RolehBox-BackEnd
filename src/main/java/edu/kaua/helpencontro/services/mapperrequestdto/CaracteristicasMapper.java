@@ -5,6 +5,7 @@ import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.*;
 import edu.kaua.helpencontro.repositories.TipoLocalRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -18,12 +19,14 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
     private final AcessibilidadeMapper acessibilidadeMapper;
     //private final OutrasTagsMapper outrasTagsMapper;
     private final TipoLocalRepository tipoLocalRepository;
+    private final OutrasTagsMapper outrasTagsMapper;
 
-    public CaracteristicasMapper(ComidaMapper comidaMapper, MusicaMapper musicaMapper, AcessibilidadeMapper acessibilidadeMapper, TipoLocalRepository tipoLocalRepository) {
+    public CaracteristicasMapper(ComidaMapper comidaMapper, MusicaMapper musicaMapper, AcessibilidadeMapper acessibilidadeMapper, TipoLocalRepository tipoLocalRepository, @Qualifier("outrasTagsMapper") OutrasTagsMapper outrasTagsMapper) {
         this.comidaMapper = comidaMapper;
         this.musicaMapper = musicaMapper;
         this.acessibilidadeMapper = acessibilidadeMapper;
         this.tipoLocalRepository = tipoLocalRepository;
+        this.outrasTagsMapper = outrasTagsMapper;
     }
 
     @Override
@@ -52,8 +55,7 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
         mapComidas(caracteristica, caracteristicaRequestDTO.getComidas());
         mapMusicas(caracteristica, caracteristicaRequestDTO.getMusicas());
         mapAcessibilidades(caracteristica, caracteristicaRequestDTO.getAcessibilidades());
-        //mapAcessibilidades(caracteristica, caracteristicaRequestDTO.getAcessibilidades());
-        //mapOutrasTags(caracteristica, caracteristicaRequestDTO.getOutrasTags());
+        mapOutrasTags(caracteristica, caracteristicaRequestDTO.getOutrasTags());
 
         return caracteristica;
     }
@@ -105,5 +107,19 @@ public class CaracteristicasMapper implements BiFunction<RolehRequestDTO.Caracte
                 acessibilidade.adicionarCaracteristica(caracteristica)
         );
         return acessibilidadesMapeadas;
+    }
+
+    private Set<OutrasTags> mapOutrasTags(CaracteristicaRole caracteristica, Set<RolehRequestDTO.OutrasTagsRequestDTO> outrasTags) {
+        if (outrasTags == null || outrasTags.isEmpty()) return null;
+
+        Set<OutrasTags> outrasTagsMapeadas = outrasTags.stream()
+                .map(outrasTagsMapper)
+                .collect(Collectors.toSet());
+
+        // Atualiza ambos os lados do relacionamento
+        outrasTagsMapeadas.forEach(outraTag ->
+                outraTag.adicionarCaracteristica(caracteristica)
+        );
+        return outrasTagsMapeadas;
     }
 }

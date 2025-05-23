@@ -36,6 +36,8 @@ public class RolehResponseDTO {
         private Set<MusicaResponseDTO> musicas;
         @Getter
         private Set<AcessibilidadeResponseDTO> acessibilidades;
+        @Getter
+        private Set<OutrasTagsResponseDTO> outrasTags;
     }
 
     @Data
@@ -53,6 +55,12 @@ public class RolehResponseDTO {
     @Data
     @RequiredArgsConstructor
     public static class AcessibilidadeResponseDTO {
+        private String description;
+    }
+
+    @Data
+    @RequiredArgsConstructor
+    public static class OutrasTagsResponseDTO {
         private String description;
     }
 }
