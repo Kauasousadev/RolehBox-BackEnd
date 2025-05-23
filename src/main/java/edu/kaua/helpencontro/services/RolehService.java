@@ -2,10 +2,12 @@ package edu.kaua.helpencontro.services;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.dto.RolehResponseDTO;
+import edu.kaua.helpencontro.dto.exceptions.ResourceNotFoundException;
 import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.repositories.RolehRepository;
 import edu.kaua.helpencontro.services.mapperrequestdto.RolehMapper;
 import edu.kaua.helpencontro.services.mapperresponsedto.RolehResponseMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,36 +15,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class RolehService {
 
-    @Autowired
     private RolehRepository rolehRepository;
-    @Qualifier("rolehMapper")
-    @Autowired
     private RolehMapper rolehMapper;
-    @Autowired
     private RolehResponseMapper rolehResponseMapper;
 
+    public RolehService(RolehRepository rolehRepository, RolehMapper rolehMapper, RolehResponseMapper rolehResponseMapper) {
+        this.rolehRepository = rolehRepository;
+        this.rolehMapper = rolehMapper;
+        this.rolehResponseMapper = rolehResponseMapper;
+    }
+
     public RolehResponseDTO getRoleh(Long id) {
-        if (rolehRepository.existsById(id)) {
-            RolehResponseDTO rolehResponseDTO = new RolehResponseDTO();
-            rolehResponseDTO = rolehResponseMapper.apply(rolehRepository.findById(id).get());
-            return rolehResponseDTO;
-        }
-        return null;
+        return rolehRepository.findById(id)
+                .map(rolehResponseMapper::apply)
+                .orElseThrow(() -> new ResourceNotFoundException("Role não encontrada com id: " + id));
     }
 
     public RolehResponseDTO addRoleh(RolehRequestDTO roleh) {
-        Roleh newRoleh = rolehMapper.apply(roleh);
-        rolehRepository.save(newRoleh);
-        RolehResponseDTO rolehResponseDTO = rolehResponseMapper.apply(newRoleh);
-        return rolehResponseDTO;
+        Roleh role = rolehMapper.apply(roleh);
+        Roleh savedRole = rolehRepository.save(role);
+        return rolehResponseMapper.apply(savedRole);
     }
 
-    public boolean deleteRoleh(Long id) {
-        if (rolehRepository.existsById(id)) {
-            rolehRepository.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
+    public void deleteRoleh(Long id) {
+        Roleh role = rolehRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role não encontrada com id: " + id));
+        rolehRepository.delete(role);
     }
 }

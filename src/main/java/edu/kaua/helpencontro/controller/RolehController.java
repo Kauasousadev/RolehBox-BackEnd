@@ -1,10 +1,12 @@
 package edu.kaua.helpencontro.controller;
 
+import edu.kaua.helpencontro.dto.ApiResponse;
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.services.RolehService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,30 +14,33 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/roleh")
 public class RolehController {
 
-    @Autowired
     private RolehService rolehService;
 
+    public RolehController(RolehService rolehService) {
+        this.rolehService = rolehService;
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<RolehResponseDTO> getRoleh(@PathVariable Long id) {
-        return ResponseEntity.ok(rolehService.getRoleh(id));
+    public ResponseEntity<ApiResponse<RolehResponseDTO>> getRoleById(@PathVariable Long id) {
+        RolehResponseDTO rolehResponse = rolehService.getRoleh(id);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "Rolê encontrado com sucesso", rolehResponse)
+        );
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addRoleh(@RequestBody @Valid RolehRequestDTO rolehRequestDTO) {
-        try {
-            RolehResponseDTO savedRoleh = rolehService.addRoleh(rolehRequestDTO);
-            return ResponseEntity.ok(savedRoleh);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @PostMapping
+    public ResponseEntity<ApiResponse<RolehResponseDTO>> createRoleh(@RequestBody @Valid RolehRequestDTO roleRequestDTO) {
+        RolehResponseDTO newRole = rolehService.addRoleh(roleRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new ApiResponse<>(true, "Rolê criado com sucesso", newRole)
+        );
     }
 
-    @DeleteMapping("/del/{id}")
-    public ResponseEntity<?> delRoleh(@PathVariable Long id) {
-        if (rolehService.deleteRoleh(id)){
-            return ResponseEntity.ok().body("Roleh deletado com sucesso");
-        }else{
-            return ResponseEntity.badRequest().body("Erro ao deletar roleh");
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteRole(@PathVariable Long id) {
+        rolehService.deleteRoleh(id);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "Rolê deletado com sucesso", null)
+        );
     }
 }
