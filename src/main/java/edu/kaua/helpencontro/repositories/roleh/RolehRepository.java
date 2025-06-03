@@ -1,4 +1,4 @@
-package edu.kaua.helpencontro.repositories;
+package edu.kaua.helpencontro.repositories.roleh;
 
 import edu.kaua.helpencontro.models.Roleh;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -4,7 +4,7 @@ import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.models.Roleh;
 import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.*;
-import edu.kaua.helpencontro.repositories.TipoLocalRepository;
+import edu.kaua.helpencontro.repositories.roleh.TipoLocalRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

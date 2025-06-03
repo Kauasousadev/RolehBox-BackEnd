@@ -2,7 +2,7 @@ package edu.kaua.helpencontro.services.mapperrequestdto;
 
 import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.OutrasTags;
-import edu.kaua.helpencontro.repositories.OutrasTagsRepository;
+import edu.kaua.helpencontro.repositories.roleh.OutrasTagsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

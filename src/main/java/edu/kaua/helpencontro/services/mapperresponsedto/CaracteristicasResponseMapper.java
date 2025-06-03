@@ -6,7 +6,7 @@ import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.OutrasTags;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoAcessibilidade;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoComida;
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
-import edu.kaua.helpencontro.repositories.TipoLocalRepository;
+import edu.kaua.helpencontro.repositories.roleh.TipoLocalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

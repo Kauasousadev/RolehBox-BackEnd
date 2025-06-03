@@ -1,4 +1,4 @@
-package edu.kaua.helpencontro.repositories;
+package edu.kaua.helpencontro.repositories.roleh;
 
 import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoLocal;
 import org.springframework.data.jpa.repository.JpaRepository;

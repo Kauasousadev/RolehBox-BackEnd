@@ -4,12 +4,9 @@ import edu.kaua.helpencontro.dto.RolehRequestDTO;
 import edu.kaua.helpencontro.dto.RolehResponseDTO;
 import edu.kaua.helpencontro.dto.exceptions.ResourceNotFoundException;
 import edu.kaua.helpencontro.models.Roleh;
-import edu.kaua.helpencontro.repositories.RolehRepository;
+import edu.kaua.helpencontro.repositories.roleh.RolehRepository;
 import edu.kaua.helpencontro.services.mapperrequestdto.RolehMapper;
 import edu.kaua.helpencontro.services.mapperresponsedto.RolehResponseMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
