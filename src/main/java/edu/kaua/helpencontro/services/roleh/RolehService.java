@@ -1,12 +1,12 @@
-package edu.kaua.helpencontro.services;
+package edu.kaua.helpencontro.services.roleh;
 
-import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
-import edu.kaua.helpencontro.dto.exceptions.ResourceNotFoundException;
-import edu.kaua.helpencontro.models.Roleh;
+import edu.kaua.helpencontro.dto.request.roleh.RolehRequestDTO;
+import edu.kaua.helpencontro.dto.response.roleh.RolehResponseDTO;
+import edu.kaua.helpencontro.exceptions.ResourceNotFoundException;
+import edu.kaua.helpencontro.models.roleh.Roleh;
 import edu.kaua.helpencontro.repositories.roleh.RolehRepository;
-import edu.kaua.helpencontro.services.mapperrequestdto.RolehMapper;
-import edu.kaua.helpencontro.services.mapperresponsedto.RolehResponseMapper;
+import edu.kaua.helpencontro.services.mappers.mapperrequestdto.RolehMapper;
+import edu.kaua.helpencontro.services.mappers.mapperresponsedto.RolehResponseMapper;
 import org.springframework.stereotype.Service;
 
 @Service

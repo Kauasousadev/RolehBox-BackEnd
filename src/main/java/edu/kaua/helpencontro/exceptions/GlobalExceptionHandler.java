@@ -1,4 +1,4 @@
-package edu.kaua.helpencontro.dto.exceptions;
+package edu.kaua.helpencontro.exceptions;
 
 import edu.kaua.helpencontro.dto.ApiResponse;
 import org.springframework.http.HttpStatus;

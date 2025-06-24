@@ -1,6 +1,5 @@
-package edu.kaua.helpencontro.dto;
+package edu.kaua.helpencontro.dto.response.roleh;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

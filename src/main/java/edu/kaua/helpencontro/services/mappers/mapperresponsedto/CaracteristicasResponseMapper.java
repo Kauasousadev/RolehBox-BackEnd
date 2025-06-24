@@ -1,11 +1,11 @@
-package edu.kaua.helpencontro.services.mapperresponsedto;
+package edu.kaua.helpencontro.services.mappers.mapperresponsedto;
 
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
-import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.OutrasTags;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoAcessibilidade;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoComida;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoMusica;
+import edu.kaua.helpencontro.dto.response.roleh.RolehResponseDTO;
+import edu.kaua.helpencontro.models.roleh.tagsrole.CaracteristicaRole;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.OutrasTags;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.TipoAcessibilidade;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.TipoComida;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.TipoMusica;
 import edu.kaua.helpencontro.repositories.roleh.TipoLocalRepository;
 import org.springframework.stereotype.Service;
 

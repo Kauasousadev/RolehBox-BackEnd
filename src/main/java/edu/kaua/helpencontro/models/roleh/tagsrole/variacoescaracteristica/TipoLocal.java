@@ -1,4 +1,4 @@
-package edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica;
+package edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class TipoLocal {
     @Column
     private String description;
 
-    public TipoLocal(Long localId) {
-        this.id = localId;
+    public TipoLocal(String description) {
+        this.description = description;
     }
 }

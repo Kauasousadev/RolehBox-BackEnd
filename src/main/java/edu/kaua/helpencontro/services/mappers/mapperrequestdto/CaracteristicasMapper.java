@@ -1,9 +1,9 @@
-package edu.kaua.helpencontro.services.mapperrequestdto;
+package edu.kaua.helpencontro.services.mappers.mapperrequestdto;
 
-import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.models.Roleh;
-import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.*;
+import edu.kaua.helpencontro.dto.request.roleh.RolehRequestDTO;
+import edu.kaua.helpencontro.models.roleh.Roleh;
+import edu.kaua.helpencontro.models.roleh.tagsrole.CaracteristicaRole;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.*;
 import edu.kaua.helpencontro.repositories.roleh.TipoLocalRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

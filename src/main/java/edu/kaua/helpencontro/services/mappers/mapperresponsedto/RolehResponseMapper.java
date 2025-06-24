@@ -1,7 +1,7 @@
-package edu.kaua.helpencontro.services.mapperresponsedto;
+package edu.kaua.helpencontro.services.mappers.mapperresponsedto;
 
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
-import edu.kaua.helpencontro.models.Roleh;
+import edu.kaua.helpencontro.dto.response.roleh.RolehResponseDTO;
+import edu.kaua.helpencontro.models.roleh.Roleh;
 
 import org.springframework.stereotype.Service;
 

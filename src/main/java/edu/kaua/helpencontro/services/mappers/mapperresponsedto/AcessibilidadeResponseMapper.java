@@ -1,8 +1,7 @@
-package edu.kaua.helpencontro.services.mapperresponsedto;
+package edu.kaua.helpencontro.services.mappers.mapperresponsedto;
 
-import edu.kaua.helpencontro.dto.RolehResponseDTO;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoAcessibilidade;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.TipoComida;
+import edu.kaua.helpencontro.dto.response.roleh.RolehResponseDTO;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.TipoAcessibilidade;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

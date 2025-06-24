@@ -1,7 +1,7 @@
-package edu.kaua.helpencontro.services.mapperrequestdto;
+package edu.kaua.helpencontro.services.mappers.mapperrequestdto;
 
-import edu.kaua.helpencontro.dto.RolehRequestDTO;
-import edu.kaua.helpencontro.models.Roleh;
+import edu.kaua.helpencontro.dto.request.roleh.RolehRequestDTO;
+import edu.kaua.helpencontro.models.roleh.Roleh;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

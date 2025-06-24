@@ -1,6 +1,6 @@
-package edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica;
+package edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica;
 
-import edu.kaua.helpencontro.models.tagsrole.CaracteristicaRole;
+import edu.kaua.helpencontro.models.roleh.tagsrole.CaracteristicaRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,27 +11,27 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class TipoComida {
+public class TipoAcessibilidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
 
-    @ManyToMany(mappedBy = "comidas")
+    @ManyToMany(mappedBy = "acessibilidades")
     private Set<CaracteristicaRole> caracteristicaRole = new HashSet<>();
 
-    public TipoComida(String getdescription) {
+    public TipoAcessibilidade(String getdescription) {
         this.description = getdescription;
     }
 
     public void adicionarCaracteristica(CaracteristicaRole caracteristicaRole) {
         this.caracteristicaRole.add(caracteristicaRole);
-        caracteristicaRole.getComidas().add(this);
+        caracteristicaRole.getAcessibilidades().add(this);
     }
 
     public void removerCaracteristica(CaracteristicaRole caracteristicaRole) {
         this.caracteristicaRole.remove(caracteristicaRole);
-        caracteristicaRole.getComidas().remove(this);
+        caracteristicaRole.getAcessibilidades().remove(this);
     }
 }

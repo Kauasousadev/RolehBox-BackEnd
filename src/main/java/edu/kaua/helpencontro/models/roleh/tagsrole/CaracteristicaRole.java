@@ -1,7 +1,7 @@
-package edu.kaua.helpencontro.models.tagsrole;
+package edu.kaua.helpencontro.models.roleh.tagsrole;
 
-import edu.kaua.helpencontro.models.Roleh;
-import edu.kaua.helpencontro.models.tagsrole.variacoescaracteristica.*;
+import edu.kaua.helpencontro.models.roleh.Roleh;
+import edu.kaua.helpencontro.models.roleh.tagsrole.variacoescaracteristica.*;
 import jakarta.persistence.*;
 import lombok.*;
 

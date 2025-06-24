@@ -1,4 +1,4 @@
-package edu.kaua.helpencontro.dto;
+package edu.kaua.helpencontro.dto.request.roleh;
 
 import lombok.*;
 
