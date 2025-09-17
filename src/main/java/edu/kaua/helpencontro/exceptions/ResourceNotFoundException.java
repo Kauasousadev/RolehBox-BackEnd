@@ -1,4 +1,4 @@
-package edu.kaua.helpencontro.dto.exceptions;
+package edu.kaua.helpencontro.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

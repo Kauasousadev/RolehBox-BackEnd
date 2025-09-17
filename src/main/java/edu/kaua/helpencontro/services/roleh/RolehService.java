@@ -7,6 +7,7 @@ import edu.kaua.helpencontro.models.roleh.Roleh;
 import edu.kaua.helpencontro.repositories.roleh.RolehRepository;
 import edu.kaua.helpencontro.services.mappers.mapperrequestdto.RolehMapper;
 import edu.kaua.helpencontro.services.mappers.mapperresponsedto.RolehResponseMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,21 +23,23 @@ public class RolehService {
         this.rolehResponseMapper = rolehResponseMapper;
     }
 
-    public RolehResponseDTO getRoleh(Long id) {
-        return rolehRepository.findById(id)
+    public ResponseEntity<RolehResponseDTO> getRoleh(Long id) {
+        RolehResponseDTO rolehReponseDTO =
+                rolehRepository.findById(id)
                 .map(rolehResponseMapper::apply)
-                .orElseThrow(() -> new ResourceNotFoundException("Role não encontrada com id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Rolê não encontrado com id: " + id));
+        return ResponseEntity.ok(rolehReponseDTO);
     }
 
-    public RolehResponseDTO addRoleh(RolehRequestDTO roleh) {
-        Roleh role = rolehMapper.apply(roleh);
-        Roleh savedRole = rolehRepository.save(role);
-        return rolehResponseMapper.apply(savedRole);
+    public ResponseEntity<RolehResponseDTO> addRoleh(RolehRequestDTO rolehRequestDTO) {
+        Roleh role = rolehMapper.apply(rolehRequestDTO);
+        return ResponseEntity.ok(rolehResponseMapper.apply(rolehRepository.save(role)));
     }
 
-    public void deleteRoleh(Long id) {
-        Roleh role = rolehRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Role não encontrada com id: " + id));
-        rolehRepository.delete(role);
+    public ResponseEntity<String> deleteRoleh(Long id) {
+        rolehRepository.delete(
+                rolehRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rolê não encontrado com id: " + id)));
+        return ResponseEntity.ok("Rolê deletado com id: " + id);
     }
 }

@@ -27,7 +27,7 @@ public class ReviewService {
         return ResponseEntity.ok(reviewToResponse.apply(savedReview));
     }
 
-    //OTIMIZAR DEPOIS!
+    //Otimizar com paginação
     public ResponseEntity<List<ReviewResponseDTO>> getAllReviewsByRoleh(Long id) {
         List<Review> reviews = reviewRepository.findAll();
         List<ReviewResponseDTO> responseDTOList = new ArrayList<ReviewResponseDTO>();

@@ -28,27 +28,20 @@ public class RolehController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<RolehResponseDTO>> getRoleById(@PathVariable Long id) {
-        RolehResponseDTO rolehResponse = rolehService.getRoleh(id);
-        return ResponseEntity.ok(
-                new ApiResponse<>(true, "Rolê encontrado com sucesso", rolehResponse)
-        );
+    public ResponseEntity<RolehResponseDTO> getRoleById(@PathVariable Long id) {
+        return rolehService.getRoleh(id);
     }
 
+    //get all rolês com paginação
+
     @PostMapping
-    public ResponseEntity<ApiResponse<RolehResponseDTO>> createRoleh(@RequestBody @Valid RolehRequestDTO roleRequestDTO) {
-        RolehResponseDTO newRole = rolehService.addRoleh(roleRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                new ApiResponse<>(true, "Rolê criado com sucesso", newRole)
-        );
+    public ResponseEntity<RolehResponseDTO> createRoleh(@RequestBody @Valid RolehRequestDTO roleRequestDTO) {
+        return rolehService.addRoleh(roleRequestDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteRole(@PathVariable Long id) {
-        rolehService.deleteRoleh(id);
-        return ResponseEntity.ok(
-                new ApiResponse<>(true, "Rolê deletado com sucesso", null)
-        );
+    public ResponseEntity<String> deleteRole(@PathVariable Long id) {
+        return rolehService.deleteRoleh(id);
     }
 
     @GetMapping("/reviews/{id}")
