@@ -7,8 +7,13 @@ import edu.kaua.helpencontro.models.roleh.Roleh;
 import edu.kaua.helpencontro.repositories.roleh.RolehRepository;
 import edu.kaua.helpencontro.services.mappers.mapperrequestdto.RolehMapper;
 import edu.kaua.helpencontro.services.mappers.mapperresponsedto.RolehResponseMapper;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RolehService {
@@ -29,6 +34,14 @@ public class RolehService {
                 .map(rolehResponseMapper::apply)
                 .orElseThrow(() -> new ResourceNotFoundException("Rolê não encontrado com id: " + id));
         return ResponseEntity.ok(rolehReponseDTO);
+    }
+
+    public ResponseEntity<List<RolehResponseDTO>> getAllRoleh(Pageable pageable) {
+        List<RolehResponseDTO> response = rolehRepository.findAll(pageable).stream()
+                .map(rolehResponseMapper::apply)
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<RolehResponseDTO> addRoleh(RolehRequestDTO rolehRequestDTO) {

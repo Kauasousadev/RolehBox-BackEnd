@@ -13,6 +13,7 @@ import edu.kaua.helpencontro.services.review.ReviewService;
 import edu.kaua.helpencontro.services.roleh.RolehService;
 import edu.kaua.helpencontro.services.search.RolehSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,10 @@ public class RolehController {
     }
 
     //get all rolês com paginação
+    @GetMapping
+    public ResponseEntity<List<RolehResponseDTO>> getAllRoles(Pageable pageable) {
+        return rolehService.getAllRoleh(pageable);
+    }
 
     @GetMapping("/search")
     public ResponseEntity<List<RolehResponseDTO>> search(@RequestBody SearchRequest searchRequest) {
@@ -54,15 +59,11 @@ public class RolehController {
                 .and(RolehSpecification.comTipoLocal(searchRequest.getTipoLocal()))
                 .and(RolehSpecification.comPrecoEntre(searchRequest.getMinPrice(), searchRequest.getMaxPrice()));
 
-        // Executa a busca no banco de dados com a especificação
         List<Roleh> resultados = rolehRepository.findAll(spec);
-
-        // 3. Mapeia a lista de entidades para a lista de DTOs usando o mapper.
         List<RolehResponseDTO> resultadosDTO = resultados.stream()
-                .map(rolehResponseMapper) // Aqui está o uso correto do mapper.
+                .map(rolehResponseMapper)
                 .toList();
 
-        // 4. Retorna a lista de DTOs na resposta.
         return ResponseEntity.ok(resultadosDTO);
     }
 

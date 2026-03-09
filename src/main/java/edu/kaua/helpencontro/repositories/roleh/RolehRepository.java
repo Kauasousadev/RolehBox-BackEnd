@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RolehRepository extends JpaRepository<Roleh, Long> , JpaSpecificationExecutor<Roleh> {
+public interface RolehRepository extends JpaRepository<Roleh, Long> , JpaSpecificationExecutor<Roleh>{
 }
