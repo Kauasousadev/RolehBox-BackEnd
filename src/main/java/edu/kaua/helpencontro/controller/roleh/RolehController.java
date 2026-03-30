@@ -12,6 +12,8 @@ import edu.kaua.helpencontro.services.mappers.mapperresponsedto.RolehResponseMap
 import edu.kaua.helpencontro.services.review.ReviewService;
 import edu.kaua.helpencontro.services.roleh.RolehService;
 import edu.kaua.helpencontro.services.search.RolehSpecification;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/roleh")
+@Tag(name = "Rolês", description = "Gerenciador de Rolês")
 public class RolehController {
 
     private final RolehService rolehService;
@@ -68,6 +71,7 @@ public class RolehController {
     }
 
     @PostMapping
+    @Operation(summary = "Cadastrar rolês", description = "Utilizando o rolerequest, cadastra um novo role")
     public ResponseEntity<RolehResponseDTO> createRoleh(@RequestBody @Valid RolehRequestDTO roleRequestDTO) {
         return rolehService.addRoleh(roleRequestDTO);
     }
